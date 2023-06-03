@@ -1,10 +1,12 @@
 package com.jpa.dio.dio.service.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jpa.dio.dio.infra.JavaUtilTimes;
 import com.jpa.dio.dio.model.Aluno;
 import com.jpa.dio.dio.model.AvaliacaoFisica;
 import com.jpa.dio.dio.model.form.AlunoForm;
@@ -44,8 +46,12 @@ public class AlunoServiceImpl implements AlunoService {
 
 	@Override
 	public List<Aluno> getAll(String dataDeNascimento) {
-		// TODO Auto-generated method stub
-		return null;
+		if(dataDeNascimento == null) {
+			return alunoRepository.findAll();
+		}else {
+			LocalDate localDate = LocalDate.parse(dataDeNascimento,JavaUtilTimes.LOCAL_DATE_FORMATTER);
+			return alunoRepository.findByDataDeNascimento(localDate);
+		}
 	}
 
 	@Override
